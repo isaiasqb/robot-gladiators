@@ -63,11 +63,9 @@ var fight = function() {
             fight();
         }
 
-
     } else {
-        window.alert("You need to choose a valid option. Try again!")
+        window.alert("You need to choose a valid option. Try again!");
     }
-
-};
+}
 
 fight();
