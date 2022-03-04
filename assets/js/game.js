@@ -36,12 +36,12 @@ var fight = function(enemyName) {
 
         // remove enemy's health
         enemyHealth = enemyHealth - playerAttack;
-        console.log(
+        window.alert(
             playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining"
         );
 
         // check enemy's health
-        if (enemyHealth <=0) {
+        if (enemyHealth <= 0) {
             window.alert(enemyName + ' has died');
 
             // award player, money for winnig
@@ -55,7 +55,7 @@ var fight = function(enemyName) {
 
         // remove player's health by subtracting the amount set in the enemyAttack variable
         playerHealth = playerHealth - enemyAttack;
-        console.log(
+        window.alert(
             enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining"
         );
 
@@ -95,7 +95,6 @@ var startGame = function() {
 
             // pass the pickedEnemyName value into the fight function. It will assume the value of the enemyName parameter
             fight(pickedEnemyName);
-        
 
             // if player is still alive and we are not at the last enemy at the array
             if (playerHealth > 0 && i < enemyNames.length - 1) {
@@ -121,6 +120,8 @@ var startGame = function() {
 
 // function to end the game
 var endGame = function() {
+    window.alert("The game has ended! Let's see how you did");
+
     // if player is still alive, player wins!
     if (playerHealth > 0) {
         window.alert("Great job, You've survived! You now have a score of " + playerMoney + ".");
@@ -140,11 +141,12 @@ var endGame = function() {
     }
 };
 
+// shop fuction
 var shop = function() {
     // ask player what they'd like to do
     var shopOptionPrompt = window.prompt(
         "Would you like to REFILL your health, UPGRADE your attack or LEAVE the shop? Please enter 'REFILL', 'UPGRADE' or 'LEAVE' to make a choice."
-        );
+    );
     
     switch(shopOptionPrompt) {
         case "refill":
