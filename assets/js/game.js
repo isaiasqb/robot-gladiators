@@ -3,12 +3,19 @@ var playerHealth = 100;
 var playerAttack = 25;
 var playerMoney = 10;
 
+var randomNumber = function (min, max){
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+    return value;
+}
+
 var enemyNames = ["Roborto", "Amy Android", "Robo Trumble", "Final RoBoss"];
-var enemyHealth = 50;
+var enemyHealth = randomNumber(40, 60);
 var enemyAttack = 20;
 
+
+
 // prints the name of every enemy and your initial stats
-for(var singleEnemy = 0; singleEnemy < enemyNames.length; singleEnemy++)
+for (var singleEnemy = 0; singleEnemy < enemyNames.length; singleEnemy++)
 window.alert("These are your enemies: Enemy #" + (singleEnemy+1) +" "+ enemyNames[singleEnemy]);
 window.alert("You start with " +playerHealth+" points of health and " +playerMoney+" dollars.")
 // debugger
@@ -27,15 +34,17 @@ var fight = function(enemyName) {
                 // if yes (true) leave fight
                 if (confirmSkip) {
                     window.alert(playerName + " has decided to skip this fight. Goodbye!");
-                    // substract money from playerMoney for skipping
-                    playerMoney = playerMoney - 10;
+                    // substract money from playerMoney for skipping. MAth.max assures that we don't display an amount lower than 0
+                    playerMoney = Math.max(0, playerMoney - 10);
                     console.log("Player Money: ", playerMoney)
                     break;
                 }
             }
 
-        // remove enemy's health
-        enemyHealth = enemyHealth - playerAttack;
+        // remove ENEMY's health generate random damage value based on player's attack power
+        var damage = randomNumber(playerAttack - 5, playerAttack);
+        // math max will display the highest value, like 0,  if the health drops below 0
+        enemyHealth = Math.max(0, enemyHealth - damage)
         window.alert(
             playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining"
         );
@@ -49,12 +58,15 @@ var fight = function(enemyName) {
 
             // leave while() lopp since enemy is death
             break;
-        } else {
-            window.alert(enemyName + " still has " + enemyHealth + " health left.");
-        }
+        } 
+        // else {
+        //     window.alert(enemyName + " still has " + enemyHealth + " health left.");
+        // }
 
-        // remove player's health by subtracting the amount set in the enemyAttack variable
-        playerHealth = playerHealth - enemyAttack;
+        // remove PLAYER's health generate random damage value based on player's attack power
+        var damage = randomNumber(enemyAttack - 5, enemyAttack);
+        // math max will display the highest value, like 0,  if the health drops below 0
+        playerHealth = Math.max(0, playerHealth - damage);
         window.alert(
             enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining"
         );
@@ -64,13 +76,14 @@ var fight = function(enemyName) {
             window.alert(playerName + " had died!");
             // leave while loop if player has died
             break;
-        } else {
-            window.alert(playerName + " still has " + playerHealth + " health left.");
         } 
+        // else {
+        //     window.alert(playerName + " still has " + playerHealth + " health left.");
+        // } 
     }
 }
 
-// function to start ne game
+// function to start new game
 var startGame = function() {
     // reset player stats
     playerHealth = 100;
@@ -192,6 +205,14 @@ var shop = function() {
 
 };
 
+
+
 // start the game when page loads
 startGame()
 
+// // prints 3/1416
+// console.log(Math.PI);
+// // rounds to the nbearest whole number
+// console.log(Math.round(5.5));
+// //prints the square root
+// console.log(Math.sqrt(30))
