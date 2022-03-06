@@ -236,10 +236,4 @@ var shop = function() {
 // start the game when page loads
 startGame()
 
-// // prints 3/1416
-// console.log(Math.PI);
-// // rounds to the nbearest whole number
-// console.log(Math.round(5.5));
-// //prints the square root
-// console.log(Math.sqrt(30))
 
