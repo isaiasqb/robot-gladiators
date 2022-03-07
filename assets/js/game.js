@@ -36,55 +36,68 @@ var fightOrSkip = function(){
     return false;
 }
 
-
     // FIGHT FUNCTION (with parameter "enemy" that retreives the enemyInfo name health and attack)
-var fight = function(enemy) {
+var fight = function(enemy) { 
+    // keep track of who goes first with the flip of a coin
+    var isPlayerTurn = true;
+
+    // randomly change turn order
+    if (Math.random() > 0.5) {
+        isPlayerTurn = false;
+    }
+
     while(playerInfo.health > 0 && enemy.health > 0) {
-        
-        if(fightOrSkip()) {
-            //if fightOrSkip returned a true value
-            break;
-        };
+        if (isPlayerTurn) {
+            // ask the player if they want to fight or skip with fightOrSkip function
+            if(fightOrSkip()) {
+                //if true, leave fight by breaking the loop
+                break;
+            };
 
-        // GENERATES RANDOM DAMAGEd base on the player's attack
-        var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
+            // GENERATES RANDOM DAMAGEd base on the player's attack
+            var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
 
-        // REMOVES ENEMIY'S health, not letting it drop below 0
-        enemy.health = Math.max(0, enemy.health - damage)
-        console.log(playerInfo.name +" 🗡️ attacked "+ enemy.name +".");
-        console.log(enemy.name +" now has "+ enemy.health + " health remaining");
+            // REMOVES ENEMIY'S health, not letting it drop below 0
+            enemy.health = Math.max(0, enemy.health - damage)
+            console.log(playerInfo.name +" 🗡️ attacked "+ enemy.name +".");
+            console.log(enemy.name +" now has "+ enemy.health + " health remaining");
 
-        // Check enemy's health. If it has been defeated announce it and award player.
-        if (enemy.health <= 0) {
-            window.alert(enemy.name + ' has died! 💀');
+            // Check enemy's health. If it has been defeated announce it and award player.
+            if (enemy.health <= 0) {
+                window.alert(enemy.name + ' has died! 💀');
 
-            // award player, money for winnig
-            playerInfo.money = playerInfo.money + 20;
+                // award player, money for winnig
+                playerInfo.money = playerInfo.money + 20;
 
-            // leave while() lopp since enemy is death
-            break;
-        } /* else {
+                // leave while() lopp since enemy is death
+                break;
+            } /* else {
             window.alert(enemy.name + " still has " + enemy.health + " health left.");
         } */
+        //Plater gets attacked firts
+        } else {
+            // remove PLAYER's health generate random damage value based on enemy's attack
+            var damage = randomNumber(enemy.attack - 5, enemy.attack);
 
-        // remove PLAYER's health generate random damage value based on enemy's attack
-        var damage = randomNumber(enemy.attack - 5, enemy.attack);
+            playerInfo.health = Math.max(0, playerInfo.health - damage);
 
-        playerInfo.health = Math.max(0, playerInfo.health - damage);
+            console.log(enemy.name + " 🗡️ attacked " + playerInfo.name + ".");
+            console.log(playerInfo.name + " now has " + playerInfo.health + " health remaining");
 
-        console.log(enemy.name + " 🗡️ attacked " + playerInfo.name + ".");
-        console.log(playerInfo.name + " now has " + playerInfo.health + " health remaining");
-
-        // check player's health
-        if(playerInfo.health <= 0){
-            window.alert(playerInfo.name + " had died! 💀");
-            // leave while loop if player has died
-            break;
-        } /*else {
-            window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
-        } */
+            // check player's health
+            if(playerInfo.health <= 0){
+                window.alert(playerInfo.name + " had died! 💀");
+                // leave while loop if player has died
+                break;
+            } /*else {
+                window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
+            } */
+        }
+        //  switch tirn order for next round
+        isPlayerTurn = !isPlayerTurn;
     }
-};
+}
+
 
     // FUNCTION TO START A NEW GAME
 var startGame = function() {
